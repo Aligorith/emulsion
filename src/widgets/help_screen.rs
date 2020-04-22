@@ -10,7 +10,7 @@ use gelatin::misc::{Alignment, Length, LogicalRect, LogicalVector, WidgetPlaceme
 use gelatin::picture::Picture;
 use gelatin::window::RenderValidity;
 use gelatin::NextUpdate;
-use gelatin::{DrawContext, Event, Widget, WidgetData, WidgetError};
+use gelatin::{DrawContext, Event, EventKind, Widget, WidgetData, WidgetError};
 
 struct HelpScreenData {
 	placement: WidgetPlacement,
@@ -174,7 +174,22 @@ impl Widget for HelpScreen {
 		borrowed.parent_space = available_space;
 	}
 
-	fn handle_event(&self, _event: &Event) {}
+	fn handle_event(&self, event: &Event) {
+		match event.kind {
+			EventKind::KeyInput { input } => {
+				use gelatin::glium::glutin::event::{ElementState, VirtualKeyCode};
+				if let Some(key) = input.virtual_keycode {
+					if input.state == ElementState::Pressed {
+						match key {
+							VirtualKeyCode::I => self.data.borrow_mut().visible = !self.visible(),
+							_ => {}
+						}
+					}
+				}
+			}
+			_ => {}
+		}
+	}
 
 	// No children for a button
 	fn children(&self, _children: &mut Vec<Rc<dyn Widget>>) {}
