@@ -9,6 +9,7 @@ use lazy_static::lazy_static;
 
 pub static TOGGLE_FULLSCREEN_NAME: &str = "toggle_fullscreen";
 pub static ESCAPE_NAME: &str = "escape";
+pub static IMG_BROWSE_NAME: &str = "img_browse";
 pub static IMG_NEXT_NAME: &str = "img_next";
 pub static IMG_PREV_NAME: &str = "img_prev";
 pub static IMG_ORIG_NAME: &str = "img_orig";
@@ -34,6 +35,7 @@ lazy_static! {
 		let mut m = HashMap::new();
 		m.insert(TOGGLE_FULLSCREEN_NAME, vec!["F11", "Return"]);
 		m.insert(ESCAPE_NAME, vec!["Escape"]);
+		m.insert(IMG_BROWSE_NAME, vec!["F1", "CmdCtrl+O"]);
 		m.insert(IMG_NEXT_NAME, vec!["D", "Right", "PageDown"]);
 		m.insert(IMG_PREV_NAME, vec!["A", "Left", "PageUp"]);
 		m.insert(IMG_ORIG_NAME, vec!["Q", "1"]);

@@ -85,6 +85,7 @@ usvg = "0.14.1"
 tiny-skia = "0.5.1"
 log = "0.4"
 env_logger = "0.8"
+nfd = "0.0.4"
 
 [dependencies.libavif-image]
 version = "0.6.0"

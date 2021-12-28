@@ -4,6 +4,9 @@ use std::rc::{Rc, Weak};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 
+extern crate nfd;
+use nfd::Response;
+
 use gelatin::cgmath::{Matrix4, Vector2, Vector3};
 use gelatin::glium::glutin::event::{ElementState, ModifiersState, MouseButton};
 use gelatin::glium::{
@@ -618,6 +621,22 @@ impl PictureWidget {
 					borrowed.clipboard_request_was_pending = true;
 				}
 			}
+		}
+		if triggered!(IMG_BROWSE_NAME) {
+			match nfd::open_file_dialog(None, None).expect("file dialog error") {
+			// TODO: Restrict to only supported image types
+				Response::Okay(file_path) => {
+					println!("Selected File Path = {:?}", file_path);
+					let file_path_buf = PathBuf::from(file_path.clone());
+					
+					borrowed.playback_manager.request_load(LoadRequest::FilePath(file_path_buf.clone()));
+					borrowed.render_validity.invalidate();
+				},
+				
+				Response::Cancel => println!("File browse cancelled"),
+				_ => (),
+			}
+
 		}
 		if let Some(img_path) = borrowed.playback_manager.shown_file_path() {
 			if let Some(folder_path) = img_path.parent() {

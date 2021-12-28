@@ -237,6 +237,7 @@ fn main() {
 		bottom_bar.slider.set_on_value_change(move || {
 			picture_widget.jump_to_index(slider.value());
 		});
+		// TODO: Right-click to launch file browser?
 	}
 	{
 		let picture_widget = picture_widget.clone();
