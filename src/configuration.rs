@@ -64,7 +64,7 @@ pub struct CacheWindowSection {
 }
 impl Default for CacheWindowSection {
 	fn default() -> Self {
-		Self { dark: false, win_w: 580, win_h: 558, win_x: 64, win_y: 64 }
+		Self { dark: true, win_w: 2000, win_h: 1200, win_x: 32, win_y: 32 }
 	}
 }
 
