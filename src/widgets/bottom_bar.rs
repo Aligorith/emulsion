@@ -154,7 +154,7 @@ impl BottomBar {
 				self.fit_stretch_button.set_icon(Some(self.fit_stretch_light.clone()));
 				self.theme_button.set_icon(Some(self.light_img.clone()));
 				self.widget.set_bg_color([0.08, 0.08, 0.08, 1.0]);
-				self.slider.set_shadow_color([0.0, 0.0, 0.0]);
+				self.slider.set_shadow_color([0.8, 0.8, 0.8]);
 
 				if update_available {
 					self.help_button.set_icon(Some(self.question_light_noti.clone()));
