@@ -33,7 +33,7 @@ pub static PAN_DOWN_NAME: &str = "pan_down";
 lazy_static! {
 	pub static ref DEFAULT_BINDINGS: HashMap<&'static str, Vec<&'static str>> = {
 		let mut m = HashMap::new();
-		m.insert(TOGGLE_FULLSCREEN_NAME, vec!["F11", "Return"]);
+		m.insert(TOGGLE_FULLSCREEN_NAME, vec!["F11"]);
 		m.insert(ESCAPE_NAME, vec!["Escape"]);
 		m.insert(IMG_BROWSE_NAME, vec!["F1", "CmdCtrl+O"]);
 		m.insert(IMG_NEXT_NAME, vec!["D", "Right", "PageDown"]);
