@@ -93,6 +93,7 @@ struct WindowData {
 	display: glium::Display,
 	size_before_fullscreen: PhysicalSize<u32>,
 	fullscreen: bool,
+	maximized: bool,
 	last_mouse_move_update_time: std::time::Instant,
 	unprocessed_move_event: Option<Event>,
 	last_event_invalidated: bool,
@@ -216,6 +217,7 @@ impl Window {
 				display,
 				size_before_fullscreen: desc.size,
 				fullscreen: false,
+				maximized: false,
 				last_mouse_move_update_time: std::time::Instant::now(),
 				unprocessed_move_event: None,
 				last_event_invalidated: true,
@@ -528,8 +530,15 @@ impl Window {
 		gl_win.window().set_fullscreen(monitor);
 	}
 
+	pub fn maximized(&self) -> bool {
+		self.data.borrow().maximized
+	}
+
 	pub fn set_maximized(&self, maximized: bool) {
 		self.display_mut().gl_window().window().set_maximized(maximized);
+		
+		let mut borrowed = self.data.borrow_mut();
+		borrowed.maximized = maximized;
 	}
 
 	/// Sets the alpha values by drawing a quad covering the entire framebuffer
