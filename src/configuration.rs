@@ -57,6 +57,7 @@ pub struct ConfigImageSection {
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct CacheWindowSection {
 	pub dark: bool,
+	pub maximized: bool,
 	pub win_w: u32,
 	pub win_h: u32,
 	pub win_x: i32,
@@ -64,7 +65,7 @@ pub struct CacheWindowSection {
 }
 impl Default for CacheWindowSection {
 	fn default() -> Self {
-		Self { dark: true, win_w: 2000, win_h: 1200, win_x: 32, win_y: 32 }
+		Self { dark: true, maximized: false, win_w: 2000, win_h: 1200, win_x: 32, win_y: 32 }
 	}
 }
 
