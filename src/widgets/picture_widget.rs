@@ -4,8 +4,8 @@ use std::rc::{Rc, Weak};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 
-extern crate nfd;
-use nfd::Response;
+extern crate nfd2;
+use nfd2::Response;
 
 use gelatin::cgmath::{Matrix4, Vector2, Vector3};
 use gelatin::glium::glutin::event::{ElementState, ModifiersState, MouseButton};
@@ -623,8 +623,8 @@ impl PictureWidget {
 			}
 		}
 		if triggered!(IMG_BROWSE_NAME) {
-			match nfd::open_file_dialog(None, None).expect("file dialog error") {
 			// TODO: Restrict to only supported image types
+			match nfd2::open_file_dialog(None, None).expect("file dialog error") {
 				Response::Okay(file_path) => {
 					println!("Selected File Path = {:?}", file_path);
 					let file_path_buf = PathBuf::from(file_path.clone());
