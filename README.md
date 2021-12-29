@@ -5,28 +5,38 @@ This is a fork of Artur Kovacs' "Emulsion" image viewer, forked from [the point 
 After trying a few of the Rust-based image viewers currently on GitHub (as of December 2021), this one appeared to be the most functional, and the closest to what I've been looking for. However, it was missing a few features + had a few annoying quirks that I wanted to try to resolve. Seeing as the original repo had been abandoned by the original author, I've gone ahead and have tried to have a stab at implementing the missing functionality myself for fun.
 
 
-Changes implemented so far in this fork:
+**Changes implemented so far in this fork**:
  * Added the ability to use a file browser to change which directory the images are loaded from (via the "nfd2" crate -- this is a thin-wrapper around the "nativefiledialog" C-library)
 
  * Change defaults so the window shows the full help image on initial startup (instead of cropping it)
 
  * Default to dark mode
  
+ * Improved styling of the slider (based on MCluck90's code) to make it more easily visible
+ 
  * Attempts to fix a bug where the window always ends up halfway off-screen on startup
 
 
-Functionality I'd still like to add:
-* `H`/`V` to instantly flip the image (and update the file on disk)
+**Functionality I'd still like to add**:
+ * `H`/`V` to instantly flip the image (and update the file on disk)
 
-* Hotkeys to rotate the image in 90-degree steps
+ * Hotkeys to rotate the image in 90-degree steps
 
-* Ability to crop + straighten the image, and/or save the resulting image to disk (with/without overwriting the original)
+ * Ability to rate (or "favourite") the images
+ 
+ * Ability to crop + straighten the image, and/or save the resulting image to disk (with/without overwriting the original)
 
-* Ability to rate (or "favourite") the images
+ * Respect ICC profiles in the image EXIF data
+ 
+ * Ability to check pixel values (RGBA value) while hovering over them (or clicking on them)
+ 
+ * Ability to measure distances on the images (either as pixels or in physical units, given a mapping factor or a reference scale) -- This requires the ability to render text
 
-* Respect ICC profiles in the image EXIF data
+ * Panel displaying metadata (e.g. image dimensions, file size, EXIF data) -- This probably requires reimplementing with a more advanced toolkit (e.g. `egui` or `iced`), as the current approach doesn't really allow rendering arbitrary text.
 
-* Panel displaying metadata (e.g. image dimensions, file size, EXIF data) -- This probably requires reimplementing with a more advanced toolkit (e.g. `egui` or `iced`), as the current approach doesn't really allow rendering arbitrary text.
+
+**Build System Changes**:
+ * A working C-compiler is now currently required to build Emulsion
 
 
 -- Aligorith (20211229)
@@ -55,8 +65,6 @@ sudo apt install libXi-dev
 ```
 
 For the [Nix Package Manager](https://nixos.wiki/wiki/Nix) users: The Nix expressions found within `nix-example` is in theory able to build a working executable from *a* state of the emulsion source code. There is no guarantee that the built executable will be identical to any released version of emulsion. The Nix expression is provided to find the dependencies and for those who like tinkering with Nix but otherwise I advise against using it.
-
-> **Note**: A working C-compiler is currently required to build Emulsion
 
 ### Notes about Cargo Features
 
