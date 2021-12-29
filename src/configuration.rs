@@ -88,7 +88,7 @@ pub struct ConfigUpdateSection {
 }
 impl Default for ConfigUpdateSection {
 	fn default() -> Self {
-		Self { check_updates: true }
+		Self { check_updates: false }
 	}
 }
 
