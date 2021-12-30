@@ -4,8 +4,7 @@ use std::rc::{Rc, Weak};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 
-extern crate nfd2;
-use nfd2::Response;
+extern crate rfd;
 
 use gelatin::cgmath::{Matrix4, Vector2, Vector3};
 use gelatin::glium::glutin::event::{ElementState, ModifiersState, MouseButton};
@@ -623,20 +622,18 @@ impl PictureWidget {
 			}
 		}
 		if triggered!(IMG_BROWSE_NAME) {
-			// TODO: Restrict to only supported image types
-			match nfd2::open_file_dialog(None, None).expect("file dialog error") {
-				Response::Okay(file_path) => {
-					println!("Selected File Path = {:?}", file_path);
-					let file_path_buf = PathBuf::from(file_path.clone());
-					
-					borrowed.playback_manager.request_load(LoadRequest::FilePath(file_path_buf.clone()));
-					borrowed.render_validity.invalidate();
-				},
-				
-				Response::Cancel => println!("File browse cancelled"),
-				_ => (),
+			let file_dialog_result = rfd::FileDialog::new()
+				.add_filter("All Supported Image Types", 
+				            &["avif", "bmp", "gif", "jpg", "jpeg", "pjpeg", "png", "apng", "svg", "svg+xml", "tiff", "webp"])
+				.add_filter("All File Types", &["*"])
+				.set_directory(&std::env::current_dir().unwrap())
+				.pick_file();
+			
+			if let Some(file_path) = file_dialog_result {
+				println!("Selected File Path = {:?}", file_path);
+				borrowed.playback_manager.request_load(LoadRequest::FilePath(file_path.clone()));
+				borrowed.render_validity.invalidate();
 			}
-
 		}
 		if let Some(img_path) = borrowed.playback_manager.shown_file_path() {
 			if let Some(folder_path) = img_path.parent() {

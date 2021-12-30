@@ -6,7 +6,7 @@ After trying a few of the Rust-based image viewers currently on GitHub (as of De
 
 
 **Changes implemented so far in this fork**:
- * Added the ability to use a file browser to change which directory the images are loaded from (via the "nfd2" crate -- this is a thin-wrapper around the "nativefiledialog" C-library)
+ * Added the ability to use a file browser to change which directory the images are loaded from
 
  * Change defaults so the window shows the full help image on initial startup (instead of cropping it)
 
@@ -33,10 +33,6 @@ After trying a few of the Rust-based image viewers currently on GitHub (as of De
  * Ability to measure distances on the images (either as pixels or in physical units, given a mapping factor or a reference scale) -- This requires the ability to render text
 
  * Panel displaying metadata (e.g. image dimensions, file size, EXIF data) -- This probably requires reimplementing with a more advanced toolkit (e.g. `egui` or `iced`), as the current approach doesn't really allow rendering arbitrary text.
-
-
-**Build System Changes**:
- * A working C-compiler is now currently required to build Emulsion
 
 
 -- Aligorith (20211229)
