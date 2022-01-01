@@ -15,6 +15,7 @@ After trying a few of the Rust-based image viewers currently on GitHub (as of De
  * Improved styling of the slider (based on MCluck90's code) to make it more easily visible
  
  * Attempts to fix a bug where the window always ends up halfway off-screen on startup
+   (i.e. This one https://github.com/ArturKovacs/emulsion/issues/210)
 
 
 **Functionality I'd still like to add**:
@@ -23,16 +24,19 @@ After trying a few of the Rust-based image viewers currently on GitHub (as of De
  * Hotkeys to rotate the image in 90-degree steps
 
  * Ability to rate (or "favourite") the images
- 
+
+ * Indicator of the number of images in the current folder, and/or what that folder is
+
  * Ability to crop + straighten the image, and/or save the resulting image to disk (with/without overwriting the original)
 
  * Respect ICC profiles in the image EXIF data
  
  * Ability to check pixel values (RGBA value) while hovering over them (or clicking on them)
+   * Optionally, the ability to view what each channel looks like (R/G/B/A), for debugging graphics buffers
  
  * Ability to measure distances on the images (either as pixels or in physical units, given a mapping factor or a reference scale) -- This requires the ability to render text
 
- * Panel displaying metadata (e.g. image dimensions, file size, EXIF data) -- This probably requires reimplementing with a more advanced toolkit (e.g. `egui` or `iced`), as the current approach doesn't really allow rendering arbitrary text.
+ * Panel displaying metadata (e.g. image dimensions, file size, EXIF data, PNG chunk data) -- This probably requires reimplementing with a more advanced toolkit (e.g. `egui` or `iced`), as the current approach doesn't really allow rendering arbitrary text.
 
 
 -- Aligorith (20211229)
