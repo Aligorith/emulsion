@@ -86,6 +86,7 @@ pub struct WindowDescriptor {
 	/// Only relevant on Wayland.
 	/// See: https://docs.rs/winit/0.24.0/winit/platform/unix/trait.WindowBuilderExtUnix.html#tymethod.with_app_id
 	#[builder(default)]
+	#[allow(dead_code)] // XXX: To silence warnings on windows, as tested with Rust 1.57+
 	app_id: Option<String>,
 }
 
