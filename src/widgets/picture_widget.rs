@@ -628,11 +628,19 @@ impl PictureWidget {
 			}
 		}
 		if triggered!(IMG_BROWSE_NAME) {
+			let start_directory =
+				if let Some(img_path) = borrowed.playback_manager.shown_folder_path() {
+					img_path
+				}
+				else {
+					std::env::current_dir().unwrap()
+				};
+			
 			let file_dialog_result = rfd::FileDialog::new()
 				.add_filter("All Supported Image Types", 
 				            &["avif", "bmp", "gif", "jpg", "jpeg", "pjpeg", "png", "apng", "svg", "svg+xml", "tiff", "webp"])
 				.add_filter("All File Types", &["*"])
-				.set_directory(&std::env::current_dir().unwrap())
+				.set_directory(&start_directory)
 				.pick_file();
 			
 			if let Some(file_path) = file_dialog_result {

@@ -232,6 +232,19 @@ impl PlaybackManager {
 		self.image_player.image_texture()
 	}
 
+	/// The path to the folder where the current image file is loaded from
+	pub fn shown_folder_path(&self) -> Option<PathBuf> {
+		if let Some(file_path) = self.shown_file_path() {
+			if let Some(folder_path) = file_path.parent() {
+				let mut result = PathBuf::new();
+				result.push(folder_path);
+				return Some(result);
+			}
+		}
+		
+		return None;
+	}
+	
 	/// The path to the image file which is currently rendered onto the screen.
 	pub fn shown_file_path(&self) -> Option<PathBuf> {
 		self.folder_player.file_path.clone()

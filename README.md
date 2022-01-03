@@ -31,6 +31,8 @@ After trying a few of the Rust-based image viewers currently on GitHub (as of De
 
  * Ability to crop + straighten the image, and/or save the resulting image to disk (with/without overwriting the original)
 
+ * Open containing folder (i.e. launch the system file browser in the containing folder)
+ 
  * Respect ICC profiles in the image EXIF data
  
  * Ability to check pixel values (RGBA value) while hovering over them (or clicking on them)
