@@ -14,6 +14,10 @@ After trying a few of the Rust-based image viewers currently on GitHub (as of De
  
  * Improved styling of the slider (based on MCluck90's code) to make it more easily visible
  
+ * Show the total number of images found in the current folder, and the index/position of the currently displayed image within that
+ 
+ * When files have invalid EXIF Orientation data, the filename is displayed as part of the error messages for those.
+ 
  * Attempts to fix a bug where the window always ends up halfway off-screen on startup
    (i.e. This one https://github.com/ArturKovacs/emulsion/issues/210)
 
@@ -24,8 +28,6 @@ After trying a few of the Rust-based image viewers currently on GitHub (as of De
  * Hotkeys to rotate the image in 90-degree steps
 
  * Ability to rate (or "favourite") the images
-
- * Indicator of the number of images in the current folder, and/or what that folder is
 
  * Ability to crop + straighten the image, and/or save the resulting image to disk (with/without overwriting the original)
 
