@@ -134,7 +134,13 @@ impl Widget for Slider {
 			let value_ratio = (borrowed.value as f32) / (borrowed.steps as f32);
 			let slider_pos = Vector3::new(position.x + value_ratio * size.x, position.y, 0.0);
 			
-			let width = size.x / (borrowed.steps as f32);
+			let mut width = size.x / (borrowed.steps as f32);
+			
+			// Clamp indicator to a minimum width, otherwise the line disappears on large folders
+			const MIN_WIDTH: f32 = 2.5;
+			if width < MIN_WIDTH {
+				width = MIN_WIDTH;
+			}
 			
 			//let color = [0.25, 0.25, 0.25, 1.0f32];  // grey
 			let color   =  [0.0, 0.6, 0.15, 0.55f32];  // green
