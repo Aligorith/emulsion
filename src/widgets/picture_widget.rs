@@ -327,11 +327,11 @@ impl PictureWidgetData {
 			None => "[ none ]".into(),
 		};
 		let index = match file_index_string {
-			Some(index_string) => format!(" {} ", index_string),
+			Some(index_string) => format!("{}  ", index_string),
 			None => "".into()
 		};
 		
-		let title = format!("{}{}{}{}", name, index, playback, title_config.format_program_name());
+		let title = format!("{}{}{}{}", index, name, playback, title_config.format_program_name());
 		window.set_title(title);
 	}
 

@@ -267,7 +267,7 @@ impl PlaybackManager {
 			}
 			
 			// Construct the String to display
-			let result = format!("({} / {})", current_index_str, total_count_str);
+			let result = format!("[{} / {}]", current_index_str, total_count_str);
 			Some(result)
 		}
 		else {
