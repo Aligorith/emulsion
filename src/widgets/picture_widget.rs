@@ -306,7 +306,7 @@ impl PictureWidgetData {
 	}
 
 	fn set_window_title_filename(
-		&self,
+		&mut self,
 		window: &Window,
 		playback_state: PlaybackState,
 		file_index_string: Option<String>,
@@ -686,12 +686,16 @@ impl Widget for PictureWidget {
 			data.bottom_bar.slider.set_steps(curr_dir_len as u32, curr_file_index as u32);
 		}
 		//data.slider.set_step_bg(data.playback_manager.cached_from_dir());
+		
 		let playback_state = data.playback_manager.playback_state();
+		let current_file_index = data.playback_manager.current_index_string();
+		let shown_file_path = data.playback_manager.shown_file_path();
+		
 		data.set_window_title_filename(
 			window,
 			playback_state,
-			data.playback_manager.current_index_string(),
-			data.playback_manager.shown_file_path(),
+			current_file_index,
+			&shown_file_path,
 		);
 		if prev_texture.is_none() != new_texture.is_none() {
 			data.render_validity.invalidate();

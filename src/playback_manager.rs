@@ -233,13 +233,16 @@ impl PlaybackManager {
 	}
 
 	/// The path to the image file which is currently rendered onto the screen.
-	pub fn shown_file_path(&self) -> &Option<PathBuf> {
-		&self.folder_player.file_path
+	pub fn shown_file_path(&self) -> Option<PathBuf> {
+		self.folder_player.file_path.clone()
 	}
 	
 	/// String representing the current file index vs total number of files in the current folder
-	/// Note: Is an empty string when nothing is loaded
-	pub fn current_index_string(&self) -> Option<String> {
+	//
+	// Note: Requires "mut", since image_cache methods need mutable state due to their multi-threaded implementation
+	//       (i.e. these getters need to poll the filtering thread to check if it's finished working yet, which may
+	//        trigger / coincide with a "processing done" event where it will flush the new state...)
+	pub fn current_index_string(&mut self) -> Option<String> {
 		if self.image_cache.current_file_path().is_some() {
 			// Display index of loaded file + total count of loadable images in the directory
 			let current_index_option : Option<usize> = self.image_cache.current_file_index();
