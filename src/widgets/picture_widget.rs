@@ -309,6 +309,7 @@ impl PictureWidgetData {
 		&self,
 		window: &Window,
 		playback_state: PlaybackState,
+		file_index_string: Option<String>,
 		file_path: &Option<PathBuf>,
 	) {
 		let playback = match playback_state {
@@ -320,13 +321,17 @@ impl PictureWidgetData {
 
 		let config = self.configuration.borrow();
 		let title_config = config.title.clone().unwrap_or_default();
-
+		
 		let name = match file_path {
 			Some(file_path) => title_config.format_file_path(file_path),
 			None => "[ none ]".into(),
 		};
+		let index = match file_index_string {
+			Some(index_string) => format!(" {} ", index_string),
+			None => "".into()
+		};
 		
-		let title = format!("{}{}{}", name, playback, title_config.format_program_name());
+		let title = format!("{}{}{}{}", name, index, playback, title_config.format_program_name());
 		window.set_title(title);
 	}
 
@@ -685,6 +690,7 @@ impl Widget for PictureWidget {
 		data.set_window_title_filename(
 			window,
 			playback_state,
+			data.playback_manager.current_index_string(),
 			data.playback_manager.shown_file_path(),
 		);
 		if prev_texture.is_none() != new_texture.is_none() {

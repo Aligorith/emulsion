@@ -236,6 +236,36 @@ impl PlaybackManager {
 	pub fn shown_file_path(&self) -> &Option<PathBuf> {
 		&self.folder_player.file_path
 	}
+	
+	/// String representing the current file index vs total number of files in the current folder
+	/// Note: Is an empty string when nothing is loaded
+	pub fn current_index_string(&self) -> Option<String> {
+		if self.image_cache.current_file_path().is_some() {
+			// Display index of loaded file + total count of loadable images in the directory
+			let current_index = 1; // FIXME
+			let total_count = 100; // FIXME
+			
+			//assert!(current_index <= total_count);
+			
+			// Pad the index value to have same number of digits as the other one
+			// so that the string length won't pop too much
+			let total_count_str = total_count.to_string();
+			
+			let mut current_index_str = current_index.to_string();
+			let pad_count = total_count_str.len() - current_index_str.len();
+			if pad_count > 0 {
+				current_index_str.insert_str(0, &" ".repeat(pad_count));
+			}
+			
+			// Construct the String to display
+			let result = format!("({} / {})", current_index_str, total_count_str);
+			Some(result)
+		}
+		else {
+			// No file path loaded
+			None
+		}
+	}
 
 	pub fn update_image(&mut self, window: &Window) -> gelatin::NextUpdate {
 		let display = window.display_mut();
