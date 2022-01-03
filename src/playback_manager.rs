@@ -185,7 +185,7 @@ impl PlaybackManager {
 		//self.playback_start_time = Instant::now();
 		//self.frame_count_since_playback_start = 0;
 		//self.playback_state = PlaybackState::RandomPresent;
-		//self.fill_present_remainig_with_random();
+		//self.fill_present_remaining_with_random();
 	}
 
 	pub fn start_presentation(&mut self) {
@@ -368,7 +368,7 @@ impl<P: Playback> ImgSequencePlayer<P> {
 		self.frametime_drift_offset = 0;
 		//self.frame_count_since_playback_start = 0;
 		self.playback_state = PlaybackState::RandomPresent;
-		self.fill_present_remainig_with_random(image_cache)
+		self.fill_present_remaining_with_random(image_cache)
 	}
 
 	pub fn start_presentation(&mut self) {
@@ -467,7 +467,7 @@ impl<P: Playback> ImgSequencePlayer<P> {
 								// Restart
 								// WARNING we silently assume that the folder is fully
 								// filtered at this point.
-								self.fill_present_remainig_with_random(image_cache);
+								self.fill_present_remaining_with_random(image_cache);
 								target = self.present_remaining.pop();
 							}
 						}
@@ -554,7 +554,7 @@ impl<P: Playback> ImgSequencePlayer<P> {
 		next_update
 	}
 
-	fn fill_present_remainig_with_random(&mut self, image_cache: &mut ImageCache) -> bool {
+	fn fill_present_remaining_with_random(&mut self, image_cache: &mut ImageCache) -> bool {
 		self.present_remaining.clear();
 		if let Some(dir_len) = image_cache.current_dir_len() {
 			for i in 0..dir_len {
