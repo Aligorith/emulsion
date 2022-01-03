@@ -242,16 +242,22 @@ impl PlaybackManager {
 	pub fn current_index_string(&self) -> Option<String> {
 		if self.image_cache.current_file_path().is_some() {
 			// Display index of loaded file + total count of loadable images in the directory
-			let current_index = 1; // FIXME
-			let total_count = 100; // FIXME
-			
-			//assert!(current_index <= total_count);
+			let current_index_option : Option<usize> = self.image_cache.current_file_index();
+			let total_count_option   : Option<usize> = self.image_cache.current_dir_len();
 			
 			// Pad the index value to have same number of digits as the other one
 			// so that the string length won't pop too much
-			let total_count_str = total_count.to_string();
+			let total_count_str = match total_count_option {
+				Some(total_count) => total_count.to_string(),
+				_ => "???".to_string()
+			};
 			
-			let mut current_index_str = current_index.to_string();
+			let mut current_index_str = match current_index_option {
+				// current_index is 0-based. Need to display as 1-based (for UI)
+				Some(current_index) => (current_index + 1).to_string(),
+				_ => "?".to_string()
+			};
+			
 			let pad_count = total_count_str.len() - current_index_str.len();
 			if pad_count > 0 {
 				current_index_str.insert_str(0, &" ".repeat(pad_count));
