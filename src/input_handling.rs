@@ -43,6 +43,8 @@ lazy_static! {
 		m.insert(IMG_FIT_BEST_NAME, vec!["E"]);
 		m.insert(IMG_DEL_NAME, vec!["Delete"]);
 		m.insert(IMG_COPY_NAME, vec!["CmdCtrl+C"]);
+		m.insert(ZOOM_IN_NAME, vec!["Add"]);
+		m.insert(ZOOM_OUT_NAME, vec!["Subtract"]);
 		m.insert(PAN_NAME, vec!["Space"]);
 		m.insert(PLAY_ANIM_NAME, vec!["Alt+A", "Alt+V"]);
 		m.insert(PLAY_PRESENT_NAME, vec!["P"]);

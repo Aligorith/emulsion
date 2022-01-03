@@ -6,7 +6,7 @@ After trying a few of the Rust-based image viewers currently on GitHub (as of De
 
 
 **Changes implemented so far in this fork**:
- * Added the ability to use a file browser to change which directory the images are loaded from
+ * Added the ability to use a file browser to change which directory the images are loaded from (Ctrl-O)
 
  * Change defaults so the window shows the full help image on initial startup (instead of cropping it)
 
@@ -20,6 +20,10 @@ After trying a few of the Rust-based image viewers currently on GitHub (as of De
  
  * Attempts to fix a bug where the window always ends up halfway off-screen on startup
    (i.e. This one https://github.com/ArturKovacs/emulsion/issues/210)
+   
+ * Additional hotkeys:
+   - `i` = Toggle usage panel
+   - `+`/`-` = Zoom in/out
 
 
 **Functionality I'd still like to add**:
@@ -30,6 +34,8 @@ After trying a few of the Rust-based image viewers currently on GitHub (as of De
  * Ability to rate (or "favourite") the images
 
  * Ability to crop + straighten the image, and/or save the resulting image to disk (with/without overwriting the original)
+
+ * Add loading indicator to provide feedback when switching to images that haven't been loaded in the cache yet
 
  * Open containing folder (i.e. launch the system file browser in the containing folder)
  
