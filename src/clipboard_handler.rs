@@ -106,6 +106,8 @@ impl ClipboardHandler {
 			}
 			let result = complex_load_image(&request_path, false, 0, |frame| {
 				if let LoadResult::Frame { mut image, orientation, .. } = frame {
+					// NOTE: The following code is only called when copying images to the clipboard
+					// TODO: Try to read from the image data actually displayed instead? We cannot copy manually flipped images otherwise!
 					if let Ok(clipboard) = &mut clipboard {
 						// Note: the imageops functions use clockwise rotation whereas the
 						// `Orientation` type describes counter-clockwise rotation.

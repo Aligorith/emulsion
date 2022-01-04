@@ -817,7 +817,23 @@ impl Widget for PictureWidget {
 			EventKind::MouseScroll { delta } => {
 				let mut borrowed = self.data.borrow_mut();
 				let delta = delta.vec.y * 0.375;
-				borrowed.zoom_image(event.cursor_pos, delta);
+				
+				if event.modifiers.ctrl() {
+					// Holding Control allows scrolling through the images in the directory instead
+					// Note: Order of prev/next follows what's down with the page up/down keys
+					if delta > 0.0 {
+						borrowed.playback_manager.request_load(LoadRequest::LoadPrevious);
+						borrowed.render_validity.invalidate();
+					}
+					else {
+						borrowed.playback_manager.request_load(LoadRequest::LoadNext);
+						borrowed.render_validity.invalidate();
+					}
+				}
+				else {
+					// Not holding any modifier keys does normal Zoom In/Out
+					borrowed.zoom_image(event.cursor_pos, delta);
+				}
 			}
 			EventKind::ReceivedCharacter(ch) => {
 				//println!("Got char {}", ch);

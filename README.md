@@ -24,6 +24,7 @@ After trying a few of the Rust-based image viewers currently on GitHub (as of De
  * Additional hotkeys:
    - `i` = Toggle usage panel
    - `+`/`-` = Zoom in/out
+   - `Ctrl+Scroll Up/Down` = Prev/Next Image
 
 
 **Functionality I'd still like to add**:
