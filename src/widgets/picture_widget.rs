@@ -30,7 +30,7 @@ use crate::{
 	playback_manager::*,
 };
 
-use super::{bottom_bar::BottomBar, copy_notification::CopyNotifications, help_screen::HelpScreen};
+use super::{bottom_bar::BottomBar, copy_notification::CopyNotifications};
 
 const MIN_ZOOM_FACTOR: f32 = 0.0001;
 const MAX_ZOOM_FACTOR: f32 = 10000.0;
@@ -156,7 +156,6 @@ struct PictureWidgetData {
 	last_cam_move_time: Instant,
 	next_update: NextUpdate,
 	bottom_bar: Rc<BottomBar>,
-	left_to_pan_hint: Rc<HelpScreen>,
 	copy_notifications: CopyNotifications,
 	window: Weak<Window>,
 }
@@ -415,7 +414,6 @@ impl PictureWidget {
 		display: &Display,
 		window: &Rc<Window>,
 		bottom_bar: Rc<BottomBar>,
-		left_to_pan_hint: Rc<HelpScreen>,
 		copy_notifications: CopyNotifications,
 		configuration: Rc<RefCell<Configuration>>,
 		cache: Arc<Mutex<Cache>>,
@@ -496,7 +494,6 @@ impl PictureWidget {
 			first_draw: true,
 			next_update: NextUpdate::Latest,
 			bottom_bar,
-			left_to_pan_hint,
 			copy_notifications,
 			window: Rc::downgrade(window),
 		};
@@ -808,9 +805,10 @@ impl Widget for PictureWidget {
 					borrowed.render_validity.invalidate();
 				}
 				MouseButton::Right => {
-					let borrowed = self.data.borrow();
-					let pressed = state == ElementState::Pressed;
-					borrowed.left_to_pan_hint.set_visible(pressed);
+					// let borrowed = self.data.borrow();
+					// let pressed = state == ElementState::Pressed;
+					
+					// TODO: Show color picker / sampler instead
 				}
 				_ => {}
 			},

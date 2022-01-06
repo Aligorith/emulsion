@@ -64,7 +64,6 @@ static NEW_VERSION: &[u8] = include_bytes!("../resource/new-version-available.pn
 static NEW_VERSION_LIGHT: &[u8] = include_bytes!("../resource/new-version-available-light.png");
 static VISIT_SITE: &[u8] = include_bytes!("../resource/visit-site.png");
 static USAGE: &[u8] = include_bytes!("../resource/usage.png");
-static LEFT_TO_PAN: &[u8] = include_bytes!("../resource/use-left-to-pan.png");
 
 
 // FIXME: Move to a utils file
@@ -213,8 +212,6 @@ fn main() {
 
 	let usage_img = Picture::from_encoded_bytes(USAGE);
 	let help_screen = Rc::new(HelpScreen::new(usage_img));
-	let left_to_pan_img = Picture::from_encoded_bytes(LEFT_TO_PAN);
-	let left_to_pan_hint = Rc::new(HelpScreen::new(left_to_pan_img));
 
 	let copy_notifications_widget = Rc::new(Label::new());
 	let copy_notifications = CopyNotifications::new(&copy_notifications_widget);
@@ -223,7 +220,6 @@ fn main() {
 	let picture_widget = make_picture_widget(
 		&window,
 		bottom_bar.clone(),
-		left_to_pan_hint.clone(),
 		copy_notifications,
 		config.clone(),
 		cache.clone(),
@@ -236,7 +232,6 @@ fn main() {
 	let picture_area_container = make_picture_area_container();
 	picture_area_container.add_child(picture_widget.clone());
 	picture_area_container.add_child(copy_notifications_widget);
-	picture_area_container.add_child(left_to_pan_hint);
 	picture_area_container.add_child(help_screen.clone());
 	picture_area_container.add_child(update_notification.clone());
 
@@ -460,7 +455,6 @@ fn make_update_notification(update_label: Rc<Label>) -> Rc<HorizontalLayoutConta
 fn make_picture_widget(
 	window: &Rc<Window>,
 	bottom_bar: Rc<BottomBar>,
-	left_to_pan_hint: Rc<HelpScreen>,
 	copy_notifications: CopyNotifications,
 	config: Rc<RefCell<Configuration>>,
 	cache: Arc<Mutex<Cache>>,
@@ -469,7 +463,6 @@ fn make_picture_widget(
 		&window.display_mut(),
 		window,
 		bottom_bar,
-		left_to_pan_hint,
 		copy_notifications,
 		config,
 		cache,
