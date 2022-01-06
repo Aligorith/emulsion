@@ -19,6 +19,7 @@ use log::trace;
 use gelatin::glium::glutin::{
 	dpi::{PhysicalPosition, PhysicalSize},
 	event::WindowEvent,
+	event_loop::EventLoop,
 	window::Icon,
 };
 use gelatin::{
@@ -65,6 +66,20 @@ static VISIT_SITE: &[u8] = include_bytes!("../resource/visit-site.png");
 static USAGE: &[u8] = include_bytes!("../resource/usage.png");
 static LEFT_TO_PAN: &[u8] = include_bytes!("../resource/use-left-to-pan.png");
 
+
+// FIXME: Move to a utils file
+fn get_monitor_dimensions() -> PhysicalSize<u32>
+{
+	if let Some(monitor_id) = EventLoop::new().primary_monitor() {
+		monitor_id.size()
+	}
+	else {
+		// XXX?
+		PhysicalSize::new(1000, 1000)
+	}
+}
+
+
 // ========================================================
 // Not-so glorious main function
 // ========================================================
@@ -102,21 +117,48 @@ fn main() {
 			win_y,
 			win_w,
 			win_h,
+			start_maximized,
 			..
 		}) = window_cfg
 		{
+			// Use default settings
+			println!("use defaults");
 			window_cache.win_x = if let Some(x) = win_x { *x } else { window_defaults.win_x };
 			window_cache.win_y = if let Some(y) = win_y { *y } else { window_defaults.win_y };
 			window_cache.win_w = if let Some(w) = win_w { *w } else { window_defaults.win_w };
 			window_cache.win_h = if let Some(h) = win_h { *h } else { window_defaults.win_h };
-		} else {
+			
+			window_cache.maximized = if let Some(m) = start_maximized { *m } else { window_defaults.maximized };
+		}
+		else {
+			// Ensure the window is on screen, if loading from the defaults
+			println!("ensure window is on screen");
+			
+			let screen_dimensions = get_monitor_dimensions();
+			println!("  screen dimensions = {:?}", screen_dimensions);
+			
 			let right = window_cache.win_x as i64 + window_cache.win_w as i64;
+			let bottom = window_cache.win_y as i64 + window_cache.win_h as i64;
+			println!("  bottom right corner = {}, {}", right, bottom);
+			
 			if right < 20 {
 				window_cache.win_w = window_defaults.win_w;
 				window_cache.win_x = window_defaults.win_x;
 			}
-			if window_cache.win_y < 20 {
+			if bottom < 20 {
+				window_cache.win_h = window_defaults.win_h;
 				window_cache.win_y = window_defaults.win_y;
+			}
+			
+			// Prevent previously maximised windows from going out of bounds...
+			// FIXME: This doesn't account for the taskbar (or topbar on Linux...)
+			if right > (screen_dimensions.width as i64) {
+				println!("  > right offscreen");
+				window_cache.win_w = ((screen_dimensions.width as i64) - (window_cache.win_x as i64)) as u32;
+			}
+			if bottom > (screen_dimensions.height as i64) {
+				println!("  > bottom offscreen");
+				window_cache.win_h = ((screen_dimensions.height as i64) - (window_cache.win_y as i64)) as u32;
 			}
 		}
 		let pos = PhysicalPosition::new(window_cache.win_x, window_cache.win_y);
@@ -133,6 +175,9 @@ fn main() {
 		// the specified position when the position is specified during initialization
 		window.display_mut().gl_window().window().set_outer_position(pos);
 
+		if window_cache.maximized {
+			window.set_maximized(true);
+		}
 		if let Some(ConfigWindowSection { start_maximized: Some(true), .. }) = window_cfg {
 			window.set_maximized(true);
 		}
