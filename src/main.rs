@@ -141,6 +141,9 @@ fn main() {
 			let bottom = window_cache.win_y as i64 + window_cache.win_h as i64;
 			println!("  bottom right corner = {}, {}", right, bottom);
 			
+			
+			// Prevent window being zero-sized + offscreen (up beyond the top-left corner)
+			// resulting from bad initialisation...
 			if right < 20 {
 				window_cache.win_w = window_defaults.win_w;
 				window_cache.win_x = window_defaults.win_x;
@@ -150,15 +153,28 @@ fn main() {
 				window_cache.win_y = window_defaults.win_y;
 			}
 			
+			
+			// NOTE: This is a nasty lazy hack to guess the "danger zone" around the edges
+			//       of the screen where things can go out of view. These values are hardcoded
+			//       to be what are needed to keep window "on screen" using Windows 10
+			//       (with UI scaling = 1.5x) - they may be too aggressive on other platforms.
+			//       Unless someone comes up with a cross-platform crate that obtains the
+			//       proper values for each platform / DWM / etc., this will have to do in the
+			//       interim.
+			//
+			// This hack is a fix for fixing https://github.com/ArturKovacs/emulsion/issues/210
+			let max_x = (screen_dimensions.width as i64) - 20;
+			let max_y = (screen_dimensions.height as i64) - 125;
+			
 			// Prevent previously maximised windows from going out of bounds...
-			// FIXME: This doesn't account for the taskbar (or topbar on Linux...)
-			if right > (screen_dimensions.width as i64) {
+			// Note: Use the "max_x/y" sizes (with the OS-chrome compensation) instead of actual screen dimensions
+			if right > max_x {
 				println!("  > right offscreen");
-				window_cache.win_w = ((screen_dimensions.width as i64) - (window_cache.win_x as i64)) as u32;
+				window_cache.win_w = (max_x - (window_cache.win_x as i64)) as u32;
 			}
-			if bottom > (screen_dimensions.height as i64) {
+			if bottom > max_y {
 				println!("  > bottom offscreen");
-				window_cache.win_h = ((screen_dimensions.height as i64) - (window_cache.win_y as i64)) as u32;
+				window_cache.win_h = (max_y - (window_cache.win_y as i64)) as u32;
 			}
 		}
 		let pos = PhysicalPosition::new(window_cache.win_x, window_cache.win_y);
