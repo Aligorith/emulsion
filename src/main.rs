@@ -122,7 +122,7 @@ fn main() {
 		}) = window_cfg
 		{
 			// Use default settings
-			println!("use defaults");
+			//println!("use defaults");
 			window_cache.win_x = if let Some(x) = win_x { *x } else { window_defaults.win_x };
 			window_cache.win_y = if let Some(y) = win_y { *y } else { window_defaults.win_y };
 			window_cache.win_w = if let Some(w) = win_w { *w } else { window_defaults.win_w };
@@ -132,7 +132,7 @@ fn main() {
 		}
 		else {
 			// Ensure the window is on screen, if loading from the defaults
-			println!("ensure window is on screen");
+			//println!("ensure window is on screen");
 			
 			let screen_dimensions = get_monitor_dimensions();
 			println!("  screen dimensions = {:?}", screen_dimensions);
