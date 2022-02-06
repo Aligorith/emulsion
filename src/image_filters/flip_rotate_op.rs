@@ -128,6 +128,7 @@ impl ImageFlipRotateOp {
 	{
 		eprintln!("flip_vertical() not implemented! Deg0VerFlip missing!")
 		//self.add_operation(Orientation::Deg0VerFlip);
+		self.add_operation(Orientation::Deg180); // XXX?
 	}
 }
 
